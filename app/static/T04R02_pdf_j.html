@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{{ machine_type }}{{ title2 }}</title>
+        <style type="text/css">
+            table
+            {
+                border-collapse: collapse;
+                margin: 0 auto;
+                text-align: left;
+            }
+            table td, table th
+            {
+                border: 2px solid #000000;
+                color: #000000;
+                height: 30px;
+            }
+            .span2714 {
+                content:"\2714";
+                font-size:14px;
+            }
+        </style>
+    </head>
+    <body style="width:760px; margin:auto;">
+        <div style="width:100%; height:80px;background-image: url({{ logo }});background-repeat: no-repeat; background-size: contain;display: inline-block;">
+            </div>
+        <div>
+            <center><h1>{{ machine_type }}<br/>{{ title2 }}</h1></center>
+        </div>
+        <table width="100%">
+            <tr>
+                <td>　機番: {{ machine_number }}</td>
+                <td>　点検実施会社： {{ company_name }}</td>
+            </tr>
+            <tr>
+                <td>　機械到着日: {{ machine_arrival_date }}</td>
+                <td>　点検実施者：{{ user_name }} </td>
+            </tr>
+            <tr>
+                <td>　点検実施日: {{ exec_date }}</td>
+                <td>　稼働時間：{{ hours }}</td>
+            </tr>
+        </table>
+        <div style="margin-top:30px;margin-bottom: 20px;text-align: right;vertical-align:middle;">
+            点検結果マーク：　
+            <img src="{{ ok_img }}" height="25px" style=""/>;ok
+            <img src="{{ cr_img }}" height="25px" style="margin-left:20px;border:none;"/>;処理要
+            <img src="{{ ng_img }}" height="25px" style="margin-left:20px;border:none;"/>;問題あり
+            <img src="{{ un_img }}" height="25px" style="margin-left:20px;border:none;"/>;処理済み
+        </div>
+        <div style="height:30px;font-size:22">
+            1. 点検項目と点検結果概要
+        </div>
+        <table  width="100%" style="border:solid;">
+            <tr style="background-color: #9b9b9b">
+                <td width="88%" style="text-align:left;">　点検項目</td>
+                <td>点検結果</td>
+            </tr>
+            {% for row in check_list.values %}
+            <tr style="border-bottom:dashed;">
+                <td> {{ row.data.INSPECTION_CONTENTS }} </td>
+                <td> </td>
+            </tr>
+            
+            {% for item in row.child.values %}
+            <tr style="border:dashed;">
+                <td>　　{{ item.INSPECTION_CONTENTS }} </td>
+                <td style="text-align: center;"><img src="{{ item.INSPECTION_RESULT }}" height="25px"/></td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr style="border:dashed;"><td></td><td></td></tr>
+            <tr><td></td><td></td></tr>
+        </table>
+        <div style="margin-top:5px;width: 100%">
+            <div style="height:30px;width:100%;"><div style="float:left;">欠陥と問題の詳細：</div><div style="border-bottom: dashed;">{{ comment }}</div></div>
+            <div style="border-bottom: dashed;width: 100%;height:30px;"></div>
+            <div style="border-bottom: dashed;width: 100%;height:30px;"></div>
+        </div>
+        <table style="width:100%;margin-top:30px;">
+            <tr>
+                <td width="30%"  style="height:50px; background-color:#9b9b9b;">
+                    お客様サイン
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        </table>
+
+        <div style="width:100%; height:80px;background-image: url({{ logo }});background-repeat: no-repeat; background-size: contain;display: inline-block;">
+        </div>
+        <div style="height:30px;font-size:22">
+            2. 手直項目(手直しが必要)/改善項目(更なる改善の要望)詳細
+        </div>
+        {% for item in attachment %}
+        <div style="float: left; margin: 10px 5px 20px 5px;">
+            <img src="{{ item.url }}" width="370" height="370"/>
+            <div style="">
+                {{ item.note }}
+            </div>
+        </div>
+        {% endfor %}
+    </body>
+</html>

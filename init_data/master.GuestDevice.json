@@ -1,0 +1,1 @@
+[{"model": "master.guestdevice", "pk": 1, "fields": {"guest": 1, "device_id": "1", "device_name": "2", "device_type": 24, "note": null, "created": "2018-07-25T03:32:59.174Z"}}, {"model": "master.guestdevice", "pk": 2, "fields": {"guest": 1, "device_id": "2", "device_name": "3", "device_type": 23, "note": null, "created": "2018-07-25T03:32:59.194Z"}}]

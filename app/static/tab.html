@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>{{ tab_name }}</title>
+        <style type="text/css">
+            table
+            {
+                border-collapse: collapse;
+                margin: 0 auto;
+                text-align: center;
+            }
+            table td, table th
+            {
+                border: 1px solid #cad9ea;
+                color: #666;
+                height: 30px;
+            }
+            table thead th
+            {
+                background-color: #CCE8EB;
+                width: 200px;
+            }
+            table tr:nth-child(odd)
+            {
+                background: #fff;
+            }
+            table tr:nth-child(even)
+            {
+                background: #F5FAFA;
+            }
+        </style>
+    </head>
+    <body>
+        <center><h1>{{ tab_name }}</h1></center>
+        <table border="1" width="100%">
+            <tr>
+                <th rowspan="{{ condition.rowspan }}" width="10">判断内容</th>
+                <th width="200">判断項目</th>
+                <th colspan="{{ condition.colspan }}">内容</th>
+            </tr>
+            {% for cond in condition.data.values %}
+            <tr>
+                <td>
+                    {{ cond.expression }}
+                </td>
+                {% for k,group in item_group.items %}
+                {% if cond.index == k %}
+                    {% for item in group.values %}
+                <td width="40">{{ item.val }}</td>
+                    {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            {% for report_item in items.values %}
+            <tr>
+                <td colspan="{{ condition.colspan|add:2 }}" style="background-color: yellow;">
+                    {{ report_item.report_name }}
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="{{report_item.list|length|add:1}}" style="background-color: rgb(114, 107, 114);">
+                </td>
+                <th style="background-color: thistle;">判定結果</th>
+                {% for step in tab_steps.values %}
+                <th colspan="{{ step.colspan }}" style="background-color: thistle;">
+                    {{ step.step_name }}
+                </th>
+                {% endfor %}
+            </tr>
+            {% for item_list in report_item.list.values %}
+            <tr>
+                <td>
+                    {{ item_list.item_name }}
+                </td>
+                {% for item in item_list.list.values %}
+                <td>
+                    {{ item.role }}
+                </td>
+                {% endfor %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

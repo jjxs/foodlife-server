@@ -1,0 +1,46 @@
+SELECT 
+            menu.id AS menu_id,
+            menu.name AS menu_name,
+            menu.price AS menu_price,
+			ranking.total, ranking.total_price
+        FROM (
+            select sum(count) total, odh.menu_id , sum(odh.price * count) total_price
+                FROM order_detail_history  odh
+				INNER JOIN order_history oh ON oh.id = odh.order_id
+                INNER JOIN counter_detail_order cdo ON cdo.order_detail_id = odh.id
+				INNER JOIN counter_detail ON counter_detail.counter_id = cdo.counter_id
+            	LEFT JOIN counter ON counter.id = counter_detail.counter_id
+				LEFT JOIN counter_seat ON counter.id = counter_seat.counter_id
+				LEFT JOIN seat_status_history ON seat_status_history.counter_no = counter_seat.counter_no
+				WHERE (counter."delete" IS NULL OR counter."delete" = FALSE)
+				AND   (counter_detail.canceled IS NULL OR counter_detail.canceled = FALSE)
+                group by odh.menu_id order by sum(count) desc
+        ) as ranking
+        LEFT JOIN menu ON menu.id = ranking.menu_id
+        ORDER BY ranking.total_price desc
+
+
+
+
+SELECT 
+            menu.id AS menu_id,
+            menu.name AS menu_name,
+            menu.price AS menu_price,
+			ranking.total, ranking.total_price, ranking.dinner, ranking.lunch
+        FROM (
+            select sum(count) total, odh.menu_id , sum(odh.price * count) total_price,
+                SUM(CASE WHEN date_part('hour',counter.create_time)>=8 THEN (odh.price * count) ELSE 0 END) as dinner,
+                SUM(CASE WHEN date_part('hour',counter.create_time)<8 THEN (odh.price * count) ELSE 0 END) as lunch
+                FROM order_detail_history  odh
+				INNER JOIN order_history oh ON oh.id = odh.order_id
+                INNER JOIN counter_detail_order cdo ON cdo.order_detail_id = odh.id
+				INNER JOIN counter_detail ON counter_detail.counter_id = cdo.counter_id
+            	LEFT JOIN counter ON counter.id = counter_detail.counter_id
+				LEFT JOIN counter_seat ON counter.id = counter_seat.counter_id
+				LEFT JOIN seat_status_history ON seat_status_history.counter_no = counter_seat.counter_no
+				WHERE (counter."delete" IS NULL OR counter."delete" = FALSE)
+				AND   (counter_detail.canceled IS NULL OR counter_detail.canceled = FALSE)
+                group by odh.menu_id order by sum(count) desc
+        ) as ranking
+        LEFT JOIN menu ON menu.id = ranking.menu_id
+        ORDER BY ranking.total_price desc

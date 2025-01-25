@@ -1,0 +1,121 @@
+.el-header {
+    /* background-color: #B3C0D1;
+    color: #333; */
+    /* height: 100%;
+    padding: 0px; */
+}
+
+.el-aside {
+    /* background-color: #D3DCE6; */
+    /* color: #333; */
+}
+
+.el-main {
+    /* background-color: #E9EEF3; */
+    /* color: #333; */
+    padding: 5px;
+}
+
+.ami-counter-button {
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    margin: 10px;
+}
+
+.ami-counter-button>i {
+    font-weight: bolder;
+}
+
+.el-card__body {
+    padding: 5px;
+}
+
+.el-menu-item {
+    line-height: 75px
+}
+
+/* #app{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: visible;
+    overflow-y: hidden;
+  } */
+
+/*明細画面のヘッダー部分*/
+
+.ami-detail-header {
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #417690;
+    color: #ffc;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.ami-fixed-header {
+    position: fixed;
+    width: 98%;
+    top: 0;
+    height: whatever;
+    z-index: 100;
+}
+
+.ami-fixed-header+* {
+    margin-top:60px;
+}
+
+.ami-detail-main {
+    padding-top: 15px;
+}
+
+.ami-label {
+    text-align: right;
+    color: #ecf5f8;
+    background-color: #79aec8;
+    border-color: #79aec8;
+    border: 1px solid transparent;
+    border-radius: 0.1rem;
+    margin: 0px 5px 5px 10px;
+    padding: 0 15px 0px 0px;
+    display: inline-block;
+}
+
+ƒ .ami-content {
+    padding: 0px 15px 0px 5px;
+}
+
+/*共通 row color*/
+
+.el-table .ami-odd-table-row {}
+
+.el-table .ami-even-table-row {}
+
+.el-table thead.is-group th, .el-table__header th {
+    
+    color: #ecf5f8;
+    background-color: #79aec8;
+    border-color: #6394aa;
+    /*color: #ffffff*/
+}
+
+#app {
+    height: 100%;
+    padding: 5px;
+}
+
+.footer {
+    clear: both;
+    position: absolute;
+    z-index: 10;
+    height: 3em;
+    margin-top: -3em;
+}
+
+html, body {
+    height: 100%;
+}
