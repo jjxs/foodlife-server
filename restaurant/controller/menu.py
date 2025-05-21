@@ -107,9 +107,11 @@ class MenuController(SampleAPIView):
             menu.tax_in,
             COALESCE(menu.mincount, 1) AS mincount,
             0 as is_free,
-            menu.introduction
+            menu.introduction,
+            course.level AS level
         FROM menu_category category
         INNER JOIN menu ON menu.id = category.menu_id
+        LEFT JOIN menu_course course ON course.menu_id = menu.id
         LEFT JOIN master_data data ON data.id = category.category_id
         LEFT JOIN master_data_group data_group ON data_group.id = data.group_id
         WHERE 1=1
