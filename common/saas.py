@@ -24,6 +24,6 @@ def id(data):
         if id[0]!="null":
             saas_id = id[0]
     if saas_id=="192":
-        saas_id = "foodlife01"
+        saas_id = "test02"
     print(saas_id)
     return saas_id

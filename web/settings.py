@@ -107,20 +107,20 @@ WSGI_APPLICATION = 'web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ami2',
+        'NAME': 'test02',
         'USER': 'postgres',
         'PASSWORD': '1122aaBB',
         # 'HOST': '127.0.0.1',
-        'HOST': 'skydesktest.clt8cpnkgvi8.ap-northeast-1.rds.amazonaws.com',
+        'HOST': 'food-life-co-jp-001.chkiiswgqiz5.ap-northeast-1.rds.amazonaws.com',
         'PORT': '5432',
     },
     'ami': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ami2',
+        'NAME': 'test02',
         'USER': 'postgres',
         'PASSWORD': '1122aaBB',
         # 'HOST': '127.0.0.1',
-        'HOST': 'skydesktest.clt8cpnkgvi8.ap-northeast-1.rds.amazonaws.com',
+        'HOST': 'food-life-co-jp-001.chkiiswgqiz5.ap-northeast-1.rds.amazonaws.com',
         'PORT': '5432',
     },
     'saas-manage': {
@@ -129,7 +129,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': '1122aaBB',
         # 'HOST': '127.0.0.1',
-        'HOST': 'skydesktest.clt8cpnkgvi8.ap-northeast-1.rds.amazonaws.com',
+        'HOST': 'food-life-co-jp-001.chkiiswgqiz5.ap-northeast-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
