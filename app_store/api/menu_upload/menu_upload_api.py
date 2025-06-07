@@ -136,6 +136,7 @@ class MenuUploadApi(BaseAPI):
                 master_data_group.display_name = row['menu_max']
                 master_data_group.domain = 'menu_category'
                 master_data_group.enabled = 1
+                master_data_group.option = {"img": "", "show_time": [0, 24]}
                 master_data_group.save()
                 group_id = master_data_group.id
             else:
