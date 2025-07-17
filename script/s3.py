@@ -91,7 +91,7 @@ def download():
             to_file = fname.split('/')
             name = to_file[-1]
             print(fname, name)
-            s3.Bucket('foodlife').download_file(fname, to_path + name)
+            s3.Bucket('foodlifebucket').download_file(fname, to_path + name)
 
 
 to_path = 'C:/Users/kxgsy/Downloads/22579343/'

@@ -215,7 +215,7 @@ class MenuMgmtApi(BaseAPI):
 
                     s3 = boto3.resource('s3')
                     image_url = SaasHandler.get_saas_id() + file_name
-                    s3.Bucket('foodlife').put_object(
+                    s3.Bucket('foodlifebucket').put_object(
                         Key=image_url, Body=base64.b64decode(b64data), ACL="public-read")
                     menu.image = image_url
                     menu.save()
@@ -969,7 +969,7 @@ class MenuMgmtApi(BaseAPI):
 
                     s3 = boto3.resource('s3')
                     image_url = SaasHandler.get_saas_id() + file_name
-                    s3.Bucket('foodlife').put_object(Key=image_url, Body=base64.b64decode(b64data), ACL="public-read")
+                    s3.Bucket('foodlifebucket').put_object(Key=image_url, Body=base64.b64decode(b64data), ACL="public-read")
                     photo_args.append(image_url)
                 params['option']['photo_args'] = photo_args
             parent = MasterData.objects.using(

@@ -66,7 +66,7 @@ class SeatController(viewsets.ModelViewSet):
 
     permission_classes = (permissions.AllowAny,)
 
-    queryset = Seat.objects.all().order_by('group_no', 'seat_no')
+    queryset = Seat.objects.all().order_by('seat_no')
 
     serializer_class = SeatSerializer
 

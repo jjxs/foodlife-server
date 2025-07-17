@@ -59,7 +59,7 @@ class MenuTop3Controller(SampleAPIView):
             s3 = boto3.resource('s3')
             menu_top.image = SaasHandler.get_saas_id() + '/theme/top3/' + file_name
 
-            s3.Bucket('foodlife').put_object(
+            s3.Bucket('foodlifebucket').put_object(
                 Key=menu_top.image, Body=base64.b64decode(b64data), ACL="public-read")
 
         else:

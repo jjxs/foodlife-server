@@ -394,7 +394,7 @@ class MenuController(SampleAPIView):
                 if data['imgName1'] == '':
                     obj.image = data['image']
 
-                s3.Bucket('foodlife').put_object(Key=filepath,
+                s3.Bucket('foodlifebucket').put_object(Key=filepath,
                                                  Body=base64.b64decode(b64data), ACL="public-read")
             if data['option'] != None and data['option'] != "":
                 optionsum += data['option']
@@ -413,7 +413,7 @@ class MenuController(SampleAPIView):
                 if 'option' in data:
                     obj.option = data['option']
 
-            s3.Bucket('foodlife').put_object(Key=filepath,
+            s3.Bucket('foodlifebucket').put_object(Key=filepath,
                                              Body=base64.b64decode(b64data), ACL="public-read")
         # 直接点击确认按钮
         if not data['imgData1'] and not data['imgData']:
@@ -435,7 +435,7 @@ class MenuController(SampleAPIView):
         if 'dellist' in data and data['dellist']:
             for newdellist in data['dellist']:
                 s3 = boto3.resource('s3')
-                s3.Bucket('foodlife').delete_objects(
+                s3.Bucket('foodlifebucket').delete_objects(
                     Delete={
                         'Objects': [
                            {

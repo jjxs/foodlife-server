@@ -126,7 +126,7 @@ class PaymentApi(BaseAPI):
 
                     s3 = boto3.resource('s3')
                     image_url = SaasHandler.get_saas_id() + file_name
-                    s3.Bucket('foodlife').put_object(
+                    s3.Bucket('foodlifebucket').put_object(
                         Key=image_url, Body=base64.b64decode(b64data), ACL="public-read")
                     newoption = {}
                     newoption['img'] = image_url
@@ -139,7 +139,7 @@ class PaymentApi(BaseAPI):
                     #     os.remove(ort_path)
 
                     # s3 = boto3.resource('s3')
-                    # s3.Bucket('foodlife').put_object(Key=menu.image)
+                    # s3.Bucket('foodlifebucket').put_object(Key=menu.image)
                     ing.image = ''
                     ing.save()
 
