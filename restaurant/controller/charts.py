@@ -96,6 +96,9 @@ class ChartsController(SampleAPIView):
                 sql_condition.append(
                     " AND date_part('hour', counter.create_time) >= 8 ")
 
+        pay_sql = "SELECT display_name FROM master_data WHERE group_id=15"
+        pay_methods = [x['display_name'] for x in Sql.sql_to_dict(pay_sql)]
+
         params = {
             'start_date': request.GET['start_date'],
             'end_date': request.GET['end_date'] + ' 23:59:59'
@@ -105,9 +108,7 @@ class ChartsController(SampleAPIView):
                 SUM(counter_detail.amounts_actually) as pay_price,
                 count( distinct(counter.id)) as counter,
                 SUM(p.person) as person,
-                SUM(CASE WHEN counter_detail.pay_method_id = 127 THEN counter_detail.amounts_actually ELSE 0 END) AS paypay_price,
-	            SUM(CASE WHEN counter_detail.pay_method_id = 51 THEN counter_detail.amounts_actually ELSE 0 END) AS money_price,
-	            SUM(CASE WHEN counter_detail.pay_method_id <> 127 and counter_detail.pay_method_id <> 51 THEN counter_detail.amounts_actually ELSE 0 END) AS other_price
+                master_data.display_name AS pay_method
             FROM counter
             left JOIN (
                 select SUM(CASE WHEN seat_status_history.number IS NULL THEN 0 ELSE seat_status_history.number END) as person ,counter_seat.counter_id 
@@ -121,14 +122,36 @@ class ChartsController(SampleAPIView):
             AND (counter."delete" IS NULL OR counter."delete" = FALSE)
             AND counter_detail.canceled IS NOT TRUE
             {0}
-            GROUP BY date 
+            GROUP BY date, master_data.display_name 
             ORDER BY date ASC
         '''
 
         menulist = Sql.sql_to_dict(sql.format('\n'.join(sql_condition)), params)
+
+        result = {}
+
+        for r in menulist:
+            d = r['date']
+            if d not in result:
+                result[d] = {
+                    'date': d,
+                    'counter': 0,
+                    'person': 0,
+                    'pay_price': 0,
+                }
+
+                # ⭐ 所有支付方式先补0
+                for pm in pay_methods:
+                    result[d][pm] = 0
+
+            result[d]['counter'] += r['counter']
+            result[d]['person'] += r['person']
+            result[d]['pay_price'] += r['pay_price']
+            result[d][r['pay_method']] = r['pay_price']
+
         # cache_data.set_menu_list(menulist)
         # print(menulist)
-        return Response(menulist)
+        return Response(list(result.values()))
 
     # 月別売上統計表
     def month(self, request, *args, **kwargs):

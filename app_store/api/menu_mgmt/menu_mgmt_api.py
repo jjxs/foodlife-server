@@ -948,32 +948,32 @@ class MenuMgmtApi(BaseAPI):
                 option[new_key] = params[key]
         
         params['option'] = option
+        with transaction.atomic(using=USE_DATABASE):
+            if(params['flag'] == "parent"):
+                parent = MasterDataGroup.objects.using(
+                    USE_DATABASE).get(id=params['id'])
+                if 'show_time' in params:
+                    params['option']['show_time'] = params['show_time']
+                parent.save(request=request, values=params, using=USE_DATABASE)
+            if(params['flag'] == "child"):
+                # メニュー画像保存
+                if "photo_args" in params and params["photo_args"]:
+                    photo_args = []
+                    for row in params['photo_args']:
+                        file_name = "/theme/menucat/{0}/{1}.jpg".format(params['id'], (len(photo_args) + 1))
+                        file_size = row["size"] if "size" in row else 0
 
-        if(params['flag'] == "parent"):
-            parent = MasterDataGroup.objects.using(
-                USE_DATABASE).get(id=params['id'])
-            if 'show_time' in params:
-                params['option']['show_time'] = params['show_time']
-            parent.save(request=request, values=params, using=USE_DATABASE)
-        if(params['flag'] == "child"):
-            # メニュー画像保存
-            if "photo_args" in params and params["photo_args"]:
-                photo_args = []
-                for row in params['photo_args']:
-                    file_name = "/theme/menucat/{0}/{1}.jpg".format(params['id'], (len(photo_args) + 1))
-                    file_size = row["size"] if "size" in row else 0
+                        # ファイル作成
+                        file_info = str(row["imgData"])
+                        _, b64data = file_info.split(',')
 
-                    # ファイル作成
-                    file_info = str(row["imgData"])
-                    _, b64data = file_info.split(',')
-
-                    s3 = boto3.resource('s3')
-                    image_url = SaasHandler.get_saas_id() + file_name
-                    s3.Bucket('foodlifebucket').put_object(Key=image_url, Body=base64.b64decode(b64data), ACL="public-read")
-                    photo_args.append(image_url)
-                params['option']['photo_args'] = photo_args
-            parent = MasterData.objects.using(
-                USE_DATABASE).get(id=params['id'])
-            parent.save(request=request, values=params, using=USE_DATABASE)
+                        s3 = boto3.resource('s3')
+                        image_url = SaasHandler.get_saas_id() + file_name
+                        s3.Bucket('foodlifebucket').put_object(Key=image_url, Body=base64.b64decode(b64data), ACL="public-read")
+                        photo_args.append(image_url)
+                    params['option']['photo_args'] = photo_args
+                parent = MasterData.objects.using(
+                    USE_DATABASE).get(id=params['id'])
+                parent.save(request=request, values=params, using=USE_DATABASE)
 
         return JsonResponse(result=True, message=Message.get_by_id(Const.MessageIDs.MQ00005))

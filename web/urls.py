@@ -34,7 +34,7 @@ urlpatterns = [
     # url(r'^custom/', include('custom.url.index')),
     # url(r'^shop/', include('shop.url.index')),
     # #url(r'',include('shop.url.index')),
-    url(r'^test/', lambda request: HttpResponse(''), name='test'),
+    url(r'^test/', lambda request: HttpResponse('test success'), name='test'),
     url(r'^restaurant/', include('restaurant.urls')),
     url(r'^master/', include('master.urls')),
     url(r'^guest/', include('guest.urls')),
