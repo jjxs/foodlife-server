@@ -248,6 +248,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
     'NON_FIELD_ERRORS_KEY': 'detail',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -288,6 +291,6 @@ LIMIT_SIZE = 50
 
 
 SITE_NAME  = "local-test"
-SITE_IMAGE_HOST = "https://foodlife.s3-ap-northeast-1.amazonaws.com"
+SITE_IMAGE_HOST = "https://foodlifebucket.s3-ap-northeast-1.amazonaws.com"
 
 

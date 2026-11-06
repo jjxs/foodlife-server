@@ -885,6 +885,7 @@ class CounterController(SampleAPIView):
                         shopCost.cost_category_id = shopCostCat.id
                         shopCost.cost_name = item['name']
                         shopCost.cost = item['amount']
+                        shopCost.tax = item.get('tax', "")
                         shopCost.pay_time = report_date
                         shopCost.save()
 

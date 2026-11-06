@@ -29,6 +29,7 @@ class ShopCostApi(BaseAPI):
             cost.cost_name,
             cost.cost_category_id,
             cost.pay_time,
+            cost.tax,
             cost.cost
         FROM
             shop_cost       cost

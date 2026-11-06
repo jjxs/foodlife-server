@@ -395,6 +395,8 @@ class MstIngredientsCat(BaseModel):
 
 class ShopCost(BaseModel):
     cost_name = DjangoModel.CharField(max_length=64, blank=True, null=True)
+    tax = DjangoModel.CharField(
+        max_length=10, blank=True, null=True)
     cost_category_id = DjangoModel.IntegerField(blank=True, null=True)
     pay_time = DjangoModel.DateTimeField(blank=True, null=True)
     cost = DjangoModel.DecimalField(
